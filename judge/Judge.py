@@ -1,4 +1,5 @@
-import os
+import subprocess
+import time
 from judge.Toolkit import *
 
 class Judge:
@@ -14,9 +15,14 @@ class Judge:
             self.txt = fp.read()
 
     def run(self):
-        output = self.txt
-        elapsed = 0.1
-        lang = get_bang(self.src_script)
-        # TODO Implement this function
+        output = None
+        elapsed = -1
+        lang = identify(self.src_script)
+        command = (self.raw_config['about'][lang]['run'] % self.src_script).split(' ')
 
+        with open(self.src_txt, 'r') as inlet:
+            start = time.time()
+            output = subprocess.check_output(command, stdin=inlet)
+            elapsed = time.time() - start
+        output = output.decode('utf-8').strip(' \r\n')
         return output, elapsed

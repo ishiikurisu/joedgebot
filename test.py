@@ -3,7 +3,7 @@ import judge
 
 class TestJudge(unittest.TestCase):
     def setUp(self):
-        self.script = '#! python\nsprint(input())'
+        self.script = '#! python\nprint(input())'
         self.txt = 'hello joe!'
         self.src_script = 'hello.py'
         self.src_txt = 'hello.txt'
