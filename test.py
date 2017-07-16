@@ -74,18 +74,32 @@ class TestApp(unittest.TestCase):
         self.rb_txt = "2"
 
     def test_can_have_a_conversation(self):
-        answer = self.controller.talk(0, '/start')
+        answer = self.controller.listen(0, '/hi')
+        self.assertEqual(answer, 'what?')
+        answer = self.controller.listen(0, '/start')
         self.assertEqual(answer, 'script:')
-        answer = self.controller.talk(1, '/start')
+        answer = self.controller.listen(1, '/start')
         self.assertEqual(answer, 'script:')
-        answer = self.controller.talk(1, self.rb_script)
+        answer = self.controller.listen(1, self.rb_script)
         self.assertEqual(answer, 'text:')
-        answer = self.controller.talk(1, self.rb_txt)
+        answer = self.controller.listen(1, self.rb_txt)
         self.assertEqual(answer, '4')
-        answer = self.controller.talk(0, self.py_script)
-        self.assertEqual(answer, 'code:')
-        answer = self.controller.talk(0, self.py_txt)
+        answer = self.controller.listen(0, self.py_script)
+        self.assertEqual(answer, 'text:')
+        answer = self.controller.listen(0, self.py_txt)
         self.assertEqual(answer, self.py_txt)
+
+    def test_can_cancel_a_conversation(self):
+        answer = self.controller.listen(1, '/start')
+        self.assertEqual(answer, 'script:')
+        answer = self.controller.listen(1, self.rb_script)
+        self.assertEqual(answer, 'text:')
+        answer = self.controller.listen(1, '/cancel')
+        self.assertEqual(answer, 'ok')
+        answer = self.controller.listen(1, self.rb_script)
+        self.assertEqual(answer, 'what?')
+        answer = self.controller.listen(1, '/start')
+        self.assertEqual(answer, 'script:')
 
 
 if __name__ == '__main__':
