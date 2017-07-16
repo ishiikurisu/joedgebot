@@ -37,6 +37,8 @@ class TestJudge(unittest.TestCase):
             language = judge.Toolkit.identify('func.fs')
         language = judge.Toolkit.get_bang(self.script)
         self.assertEqual('python', language)
+        language = judge.Toolkit.get_bang('puts "hello joe"')
+        self.assertIsNone(language)
 
     def test_runs_a_program(self):
         judge.Toolkit.save(self.src_script, self.script)

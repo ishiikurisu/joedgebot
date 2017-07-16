@@ -23,12 +23,14 @@ def identify(filename):
     """Identifies which language the script was written on."""
     extension = filename.split('.')[-1]
     raw_config = load_config('config.json')
-
     if extension in raw_config['available']:
         return raw_config['available'][extension]
     else:
         raise TypeError()
 
-def get_bang(filename):
-    # TODO Implement this function
-    return 'python'
+def get_bang(script):
+    first_line_stuff = script.split('\n')[0].split('!')
+    if len(first_line_stuff) > 1:
+        return first_line_stuff[1].strip()
+    else:
+        return None
