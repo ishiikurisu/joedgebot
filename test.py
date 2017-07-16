@@ -33,6 +33,8 @@ class TestJudge(unittest.TestCase):
         self.assertEqual('java', language)
         language = judge.Judge.identify('dog.c')
         self.assertEqual('c', language)
+        with self.assertRaises(TypeError):
+            language = judge.Judge.identify('func.fs')
 
     def test_runs_a_program(self):
         judge.Judge.save(self.src_script, self.script)

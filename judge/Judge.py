@@ -19,3 +19,16 @@ class Judge:
             os.remove(what)
         except FileNotFoundError:
             pass
+
+    def identify(filename):
+        extension = filename.split('.')[-1]
+        if extension == 'py':
+            return 'python'
+        elif extension == 'rb':
+            return 'ruby'
+        elif extension == 'java':
+            return 'java'
+        elif extension == 'c':
+            return 'c'
+        else:
+            raise TypeError()
