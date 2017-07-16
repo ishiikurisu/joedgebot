@@ -2,6 +2,7 @@ import os
 
 class Judge:
     def __init__(self, src_script, src_txt):
+        """Creates a new judge that is able to run"""
         self.src_script = src_script
         self.src_txt = src_txt
         with open(src_script, 'r') as fp:
@@ -14,4 +15,7 @@ class Judge:
             fp.write(what)
 
     def delete(what):
-        os.remove(what)
+        try:
+            os.remove(what)
+        except FileNotFoundError:
+            pass
