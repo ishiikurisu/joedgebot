@@ -34,3 +34,14 @@ def get_bang(script):
         return first_line_stuff[1].strip()
     else:
         return None
+
+def extend(language):
+    # BUG Is not using the config.json file
+    if language == 'python':
+        return 'py'
+    elif language == 'ruby':
+        return 'rb'
+    elif language == 'text':
+        return 'txt'
+    else:
+        return None

@@ -114,12 +114,13 @@ class TestApp(unittest.TestCase):
     def test_can_run_only_after_saving(self):
         with self.assertRaises(RuntimeError):
             self.controller.run()
-        self.controller.save_script(self.py_script, 'python')
+        self.controller.save_script(1, self.py_script, 'python')
         with self.assertRaises(RuntimeError):
             self.controller.run()
-        self.controller.save_text(self.py_txt)
+        self.controller.save_text(1, self.py_txt)
         output = self.controller.run()
         self.assertEqual(output, self.py_txt)
+        self.controller.clean(1)
 
 if __name__ == '__main__':
     unittest.main()
