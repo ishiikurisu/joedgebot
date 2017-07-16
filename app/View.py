@@ -3,6 +3,7 @@ class View:
         self.step = -1
         self.finished = False
         self.controller = controller
+        self.language = None
 
     def ask(self, question):
         if self.step == 0:
@@ -11,7 +12,8 @@ class View:
                 return 'ok'
             else:
                 self.step = 1
-                # TODO Process sent script
+                self.language = self.controller.understand(question)
+                self.controller.save_script(question, language)
                 return 'text:'
         elif self.step == 1:
             if question == '/cancel':
@@ -20,8 +22,8 @@ class View:
             else:
                 self.step = -1
                 self.finished = True
-                # TODO Run the script!
-                return '4'
+                self.controller.save_text(question)
+                return self.controller.run()
         else:
             if question == '/start':
                 self.step = 0

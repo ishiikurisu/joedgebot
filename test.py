@@ -65,6 +65,10 @@ class TestJudge(unittest.TestCase):
         judge.Toolkit.delete(src_script)
         judge.Toolkit.delete(src_txt)
 
+    def test_generate_correct_extension(self):
+        self.assertEqual('py', judge.Toolkit.extend('python'))
+        self.assertEqual('rb', judge.Toolkit.extend('ruby'))
+
 class TestApp(unittest.TestCase):
     def setUp(self):
         self.controller = app.Controller()
@@ -101,6 +105,21 @@ class TestApp(unittest.TestCase):
         answer = self.controller.listen(1, '/start')
         self.assertEqual(answer, 'script:')
 
+    def test_can_understand_languages(self):
+        lang = self.controller.understand(self.py_script)
+        self.assertEqual(lang, 'python')
+        lang = self.controller.understand(self.rb_script)
+        self.assertEqual(lang, 'ruby')
+
+    def test_can_run_only_after_saving(self):
+        with self.assertRaises(RuntimeError):
+            self.controller.run()
+        self.controller.save_script(self.py_script, 'python')
+        with self.assertRaises(RuntimeError):
+            self.controller.run()
+        self.controller.save_text(self.py_txt)
+        output = self.controller.run()
+        self.assertEqual(output, self.py_txt)
 
 if __name__ == '__main__':
     unittest.main()
