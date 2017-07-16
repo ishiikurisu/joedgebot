@@ -11,17 +11,21 @@ class Judge:
             self.txt = fp.read()
 
     def save(where, what):
+        """Saves data on a file. Might overwrite any changes."""
         with open(where, 'w') as fp:
             fp.write(what)
 
     def delete(what):
+        """Removes the given file from the file system."""
         try:
             os.remove(what)
         except FileNotFoundError:
             pass
 
     def identify(filename):
+        """Identifies which language the script was written on."""
         extension = filename.split('.')[-1]
+        # TODO Add this data to a JSON file for better processing
         if extension == 'py':
             return 'python'
         elif extension == 'rb':
