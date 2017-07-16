@@ -1,0 +1,19 @@
+{
+    "available": {
+        "py": "python",
+        "rb": "ruby",
+        "java": "java",
+        "c": "c",
+        "cpp": "c++"
+    },
+    "about": {
+        "python": {
+            "kind": "interpreted",
+            "run": "python %s"
+        },
+        "ruby": {
+            "kind": "interpreted",
+            "run": "ruby %s"
+        }
+    }
+}
