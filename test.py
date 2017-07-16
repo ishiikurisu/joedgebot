@@ -46,6 +46,20 @@ class TestJudge(unittest.TestCase):
         judge.Judge.delete(self.src_script)
         judge.Judge.delete(self.src_txt)
 
+    def test_fetches_a_program(self):
+        txt = "2"
+        src_txt = "double.txt"
+        script = "puts(gets.chomp.to_i*2)"
+        src_script = "double.rb"
+        judge.Judge.save(src_script, script)
+        judge.Judge.save(src_txt, txt)
+        self.judge = judge.Judge(src_script, src_txt)
+        output, run_time = self.judge.run()
+        self.assertEqual(output, "4")
+        self.assertGreater(run_time, 0)
+        judge.Judge.delete(src_script)
+        judge.Judge.delete(src_txt)
+
 
 if __name__ == '__main__':
     unittest.main()
