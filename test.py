@@ -1,5 +1,6 @@
 import unittest
 import judge
+import app
 
 class TestJudge(unittest.TestCase):
     def setUp(self):
@@ -63,6 +64,28 @@ class TestJudge(unittest.TestCase):
         self.assertGreater(run_time, 0)
         judge.Toolkit.delete(src_script)
         judge.Toolkit.delete(src_txt)
+
+class TestApp(unittest.TestCase):
+    def setUp(self):
+        self.controller = app.Controller()
+        self.py_script = '#! python\nprint(input())'
+        self.py_txt = 'hello joe!'
+        self.rb_script = "#! ruby\nputs(gets.chomp.to_i*2)"
+        self.rb_txt = "2"
+
+    def test_can_have_a_conversation(self):
+        answer = self.controller.talk(0, '/start')
+        self.assertEqual(answer, 'script:')
+        answer = self.controller.talk(1, '/start')
+        self.assertEqual(answer, 'script:')
+        answer = self.controller.talk(1, self.rb_script)
+        self.assertEqual(answer, 'text:')
+        answer = self.controller.talk(1, self.rb_txt)
+        self.assertEqual(answer, '4')
+        answer = self.controller.talk(0, self.py_script)
+        self.assertEqual(answer, 'code:')
+        answer = self.controller.talk(0, self.py_txt)
+        self.assertEqual(answer, self.py_txt)
 
 
 if __name__ == '__main__':

@@ -2,8 +2,7 @@ import telepot
 
 class App:
     """Here it is: this bot's entry point. Create a new app by giving it their
-    API code as provided by Telegram and start running it. It will load the
-    users' database file into memory and update their status."""
+    API code as provided by Telegram and start running it."""
     def __init__(self, api):
         self.bot = telepot.Bot(api)
         self.offset = 0
