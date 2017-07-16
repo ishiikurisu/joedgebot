@@ -10,6 +10,11 @@ class Judge:
         with open(src_txt, 'r') as fp:
             self.txt = fp.read()
 
+    def run(self):
+        output = self.txt
+        elapsed = 0.1
+        return output, elapsed
+
     def save(where, what):
         """Saves data on a file. Might overwrite any changes."""
         with open(where, 'w') as fp:
