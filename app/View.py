@@ -25,7 +25,7 @@ class View:
             else:
                 self.step = -1
                 self.controller.save_text(self.name, question)
-                output = self.controller.run()
+                output = self.controller.run(self.name)
                 self.clean()
                 return output
         else:

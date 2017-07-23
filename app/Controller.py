@@ -26,6 +26,7 @@ class Controller:
         extension = Model.extend(language)
         filename = '%d.%s' % (name, extension)
         Model.save_script(filename, script)
+        return filename
 
     def save_text(self, name, text):
         self.save_script(name, text, 'text')
@@ -34,6 +35,10 @@ class Controller:
         Model.clean(str(name) + '.txt')
         Model.clean(str(name) + '.' + Model.extend(self.ids[name]['view'].language))
 
-    def run(self):
-        # TODO Implement this function
-        return '4'
+    def run(self, name):
+        script = '%d.%s' % (name, Model.extend(self.ids[name]['view'].language))
+        text = str(name) + '.txt'
+        Model.check_existence(script)
+        Model.check_existence(text)
+        output, run_time = Model.run(script, text)
+        return output

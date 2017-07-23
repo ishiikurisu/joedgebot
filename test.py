@@ -112,15 +112,14 @@ class TestApp(unittest.TestCase):
         self.assertEqual(lang, 'ruby')
 
     def test_can_run_only_after_saving(self):
+        self.controller.listen(1, '/start')
         with self.assertRaises(RuntimeError):
-            self.controller.run()
-        self.controller.save_script(1, self.py_script, 'python')
+            self.controller.run(1)
+        self.controller.listen(1, self.py_script)
         with self.assertRaises(RuntimeError):
-            self.controller.run()
-        self.controller.save_text(1, self.py_txt)
-        output = self.controller.run()
+            self.controller.run(1)
+        output = self.controller.listen(1, self.py_txt)
         self.assertEqual(output, self.py_txt)
-        self.controller.clean(1)
 
 if __name__ == '__main__':
     unittest.main()

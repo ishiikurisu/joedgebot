@@ -3,6 +3,7 @@
         "py": "python",
         "rb": "ruby",
         "java": "java",
+        "txt": "text",
         "c": "c",
         "cpp": "c++"
     },
@@ -14,6 +15,10 @@
         "ruby": {
             "kind": "interpreted",
             "run": "ruby %s"
+        },
+        "text": {
+            "kind": "interpreted",
+            "run": "cat %s"
         }
     }
 }
