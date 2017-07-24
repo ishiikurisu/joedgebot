@@ -19,18 +19,22 @@ class Judge:
         output = None
         elapsed = -1
 
+        # Cleaning source code
+        with open(self.src_script, 'w') as fp:
+            fp.write('\n'.join(self.script.split('\n')[1:]))
+
         # Building
         lang = identify(self.src_script)
         kind = self.raw_config['about'][lang]['kind']
         if kind == 'interpreted':
             raw_command = self.raw_config['about'][lang]['run']
-            command = (raw_command % self.src_script).split(' ')
+            command = (raw_command.format(self.src_script)).split(' ')
         elif kind == 'compiled':
             raw_build = self.raw_config['about'][lang]['build']
-            build = (raw_build % self.src_script).split(' ')
+            build = (raw_build.format(self.src_script)).split(' ')
             subprocess.check_output(build)
             raw_command = self.raw_config['about'][lang]['run']
-            command = (raw_command % self.src_script).split(' ')
+            command = (raw_command.format(self.src_script)).split(' ')
 
 
         # Executing

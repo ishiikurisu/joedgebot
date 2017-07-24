@@ -12,20 +12,20 @@
     "about": {
         "python": {
             "kind": "interpreted",
-            "run": "python %s"
+            "run": "python {0}"
         },
         "ruby": {
             "kind": "interpreted",
-            "run": "ruby %s"
+            "run": "ruby {0}"
         },
         "text": {
             "kind": "interpreted",
-            "run": "cat %s"
+            "run": "cat {0}"
         },
         "c": {
             "kind": "compiled",
-            "build": "gcc %s -o %s.out",
-            "run": "./%s.out",
+            "build": "gcc {0} -o {0}.out",
+            "run": "./{0}.out",
             "clean": "rm %s.out"
         }
     }
