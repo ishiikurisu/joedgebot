@@ -5,7 +5,9 @@
         "java": "java",
         "txt": "text",
         "c": "c",
-        "cpp": "c++"
+        "cpp": "c++",
+        "go": "go",
+        "lua": "lua"
     },
     "about": {
         "python": {
@@ -19,6 +21,12 @@
         "text": {
             "kind": "interpreted",
             "run": "cat %s"
+        },
+        "c": {
+            "kind": "compiled",
+            "build": "gcc %s -o %s.out",
+            "run": "./%s.out",
+            "clean": "rm %s.out"
         }
     }
 }

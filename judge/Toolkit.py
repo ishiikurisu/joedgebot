@@ -37,11 +37,11 @@ def get_bang(script):
 
 def extend(language):
     # BUG Is not using the config.json file
-    if language == 'python':
-        return 'py'
-    elif language == 'ruby':
-        return 'rb'
-    elif language == 'text':
-        return 'txt'
-    else:
-        return None
+    outlet = None
+    with open('config.json', 'r') as fp:
+        extensions = json.loads(fp.read())['available']
+    for extension in extensions:
+        current = extensions[extension]
+        if current == language:
+            outlet = extension
+    return outlet

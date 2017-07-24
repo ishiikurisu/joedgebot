@@ -11,6 +11,6 @@ if __name__ == '__main__':
         except KeyboardInterrupt:
             print('...')
             break
-        # except HTTPSConnectionPool:
-        #     print('--- # Connection lost... restarting')
-        #     bot = App(api)
+#         except:
+#             print('--- # Connection lost... restarting')
+#             bot = App(api)
