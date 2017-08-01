@@ -11,8 +11,6 @@ class Judge:
         self.src_txt = src_txt
         with open(src_script, 'r') as fp:
             self.script = fp.read()
-        with open(src_txt, 'r') as fp:
-            self.txt = fp.read()
 
     def run(self):
         """Builds and runs the provided scripts"""
@@ -32,16 +30,24 @@ class Judge:
         elif kind == 'compiled':
             raw_build = self.raw_config['about'][lang]['build']
             build = (raw_build.format(self.src_script)).split(' ')
-            subprocess.check_output(build)
+            try:
+                subprocess.check_output(build)
+            except CalledProcessError as e:
+                return e.output, elapsed
             raw_command = self.raw_config['about'][lang]['run']
             command = (raw_command.format(self.src_script)).split(' ')
-
+        else:
+            raise AttributeError()
 
         # Executing
         with open(self.src_txt, 'r') as inlet:
-            start = time.time()
             # TODO Collect stderr for displaying it whenever necessary
-            output = subprocess.check_output(command, stdin=inlet)
-            elapsed = time.time() - start
-        output = output.decode('utf-8').strip(' \r\n')
+            try:
+                start = time.time()
+                output = subprocess.check_output(command, stdin=inlet, stderr=subprocess.STDOUT)
+                elapsed = time.time() - start
+                output = output.decode('utf-8').strip(' \r\n')
+            except subprocess.CalledProcessError as e:
+                output = e.output
+                elapsed = -1
         return output, elapsed
