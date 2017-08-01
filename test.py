@@ -69,6 +69,20 @@ class TestJudge(unittest.TestCase):
         self.assertEqual('py', judge.Toolkit.extend('python'))
         self.assertEqual('rb', judge.Toolkit.extend('ruby'))
 
+    def test_raises_error_when_running_an_invalid_script(self):
+        txt = "2"
+        src_txt = "double.txt"
+        script = "puts(gets.chomp.toi*2)"
+        src_script = "double.rb"
+        judge.Toolkit.save(src_script, script)
+        judge.Toolkit.save(src_txt, txt)
+        with self.assertRaises(RuntimeError):
+            self.judge = judge.Judge(src_script, src_txt)
+            self.judge.run()
+        judge.Toolkit.delete(src_script)
+        judge.Toolkit.delete(src_txt)
+
+
 class TestApp(unittest.TestCase):
     def setUp(self):
         self.controller = app.Controller()
