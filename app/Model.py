@@ -9,6 +9,9 @@ class Model:
         if what is not None:
             judge.Toolkit.delete(what)
 
+    def erase_user(user):
+        os.system('rm %s*' % (user))
+
     def extend(language):
         return judge.Toolkit.extend(language)
 

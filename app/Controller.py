@@ -32,8 +32,7 @@ class Controller:
         self.save_script(name, text, 'text')
 
     def clean(self, name):
-        Model.clean(str(name) + '.txt')
-        Model.clean(str(name) + '.' + Model.extend(self.ids[name]['view'].language))
+        Model.erase_user(name)
 
     def run(self, name):
         script = '%d.%s' % (name, Model.extend(self.ids[name]['view'].language))
