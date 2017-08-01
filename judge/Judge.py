@@ -18,8 +18,9 @@ class Judge:
         elapsed = -1
 
         # Cleaning source code
-        with open(self.src_script, 'w') as fp:
-            fp.write('\n'.join(self.script.split('\n')[1:]))
+        if self.script.split('\n')[0][0:2] == '#!':
+            with open(self.src_script, 'w') as fp:
+                fp.write('\n'.join(self.script.split('\n')[1:]))
 
         # Building
         lang = identify(self.src_script)
@@ -31,8 +32,8 @@ class Judge:
             raw_build = self.raw_config['about'][lang]['build']
             build = (raw_build.format(self.src_script)).split(' ')
             try:
-                subprocess.check_output(build)
-            except CalledProcessError as e:
+                subprocess.check_output(build, stderr=subprocess.STDOUT)
+            except subprocess.CalledProcessError as e:
                 return e.output, elapsed
             raw_command = self.raw_config['about'][lang]['run']
             command = (raw_command.format(self.src_script)).split(' ')
@@ -41,7 +42,6 @@ class Judge:
 
         # Executing
         with open(self.src_txt, 'r') as inlet:
-            # TODO Collect stderr for displaying it whenever necessary
             try:
                 start = time.time()
                 output = subprocess.check_output(command, stdin=inlet, stderr=subprocess.STDOUT)
@@ -50,4 +50,5 @@ class Judge:
             except subprocess.CalledProcessError as e:
                 output = e.output
                 elapsed = -1
+
         return output, elapsed
