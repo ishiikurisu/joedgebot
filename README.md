@@ -45,12 +45,12 @@ I have currently implemented the following languages:
 - Python (`python3 script.py`)
 - Ruby (`ruby script.rb`)
 - C (`gcc script.c -o script.c.out; ./script.c.out`)
+- Go (`go run script.go`)
+- Lua (`lua script.lua`)
 
 And I am planning on providing the following languages:
 
 - C++
 - Java
-- Go
 - C#
 - Javascript
-- Lua
