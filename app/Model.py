@@ -26,3 +26,10 @@ class Model:
     def check_existence(filename):
         if not os.path.isfile(filename):
             raise RuntimeError()
+
+    def is_valid(language):
+        config = judge.Toolkit.load_config('config.json')
+        if language in config['about']:
+            return True
+        else:
+            return False

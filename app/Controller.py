@@ -9,7 +9,7 @@ class Controller:
         if name not in self.ids:
             self.ids[name] = self.new_mv(name)
         view = self.ids[name]['view']
-        output = view.ask(question)
+        output = view.answer(question)
         if view.finished:
             del self.ids[name]
         return output
@@ -21,6 +21,9 @@ class Controller:
 
     def understand(self, script):
         return Model.understand(script)
+
+    def is_valid(self, lang):
+        return Model.is_valid(lang)
 
     def save_script(self, name, script, language):
         extension = Model.extend(language)

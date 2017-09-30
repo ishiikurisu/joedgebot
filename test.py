@@ -123,6 +123,8 @@ class TestApp(unittest.TestCase):
         self.py_txt = 'hello joe!'
         self.rb_script = "#! ruby\nputs(gets.chomp.to_i*2)"
         self.rb_txt = "2"
+        self.rnd_script = "#! rnd\nspeak listen\n"
+        self.rnd_txt = "not a real language"
 
     def test_can_have_a_conversation(self):
         answer = self.controller.listen(0, '/hi')
@@ -167,6 +169,13 @@ class TestApp(unittest.TestCase):
             self.controller.run(1)
         output = self.controller.listen(1, self.py_txt)
         self.assertEqual(output, self.py_txt)
+
+    def test_can_survive_an_unknown_language(self):
+        self.controller.listen(1, '/start')
+        answer = self.controller.listen(1, self.rnd_script)
+        self.assertEqual(answer, "Unknown language")
+        answer = self.controller.listen(1, self.rnd_txt)
+        self.assertEqual(answer, 'what?')
 
 if __name__ == '__main__':
     unittest.main()

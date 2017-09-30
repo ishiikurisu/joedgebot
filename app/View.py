@@ -6,7 +6,7 @@ class View:
         self.language = None
         self.name = name
 
-    def ask(self, question):
+    def answer(self, question):
         if self.step == 0:
             if question == '/cancel':
                 self.clean(self.name)
@@ -15,8 +15,12 @@ class View:
             else:
                 self.step = 1
                 self.language = self.controller.understand(question)
-                self.controller.save_script(self.name, question, self.language)
-                return 'text:'
+                if self.controller.is_valid(self.language):
+                    self.controller.save_script(self.name, question, self.language)
+                    return 'text:'
+                else:
+                    self.step = -1
+                    return 'Unknown language'
         elif self.step == 1:
             self.finished = True
             if question == '/cancel':

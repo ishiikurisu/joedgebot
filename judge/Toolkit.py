@@ -3,7 +3,7 @@ import json
 
 def load_config(configfile):
     outlet = { }
-    with open('config.json', 'r') as fp:
+    with open(configfile, 'r') as fp:
         outlet = json.loads(fp.read())
     return outlet
 
@@ -36,7 +36,6 @@ def get_bang(script):
         return None
 
 def extend(language):
-    # BUG Is not using the config.json file
     outlet = None
     with open('config.json', 'r') as fp:
         extensions = json.loads(fp.read())['available']
