@@ -81,6 +81,40 @@ class TestJudge(unittest.TestCase):
         judge.Toolkit.delete(src_script)
         judge.Toolkit.delete(src_txt)
 
+    def test_run_a_golang_program(self):
+        script = """
+package main
+import "fmt"
+func main() {
+    fmt.Println("hello joe!")
+}
+        """
+        txt = "asdf"
+        script_file = "test.go"
+        txt_file = "test.txt"
+        judge.Toolkit.save(script_file, script)
+        judge.Toolkit.save(txt_file, txt)
+        self.judge = judge.Judge(script_file, txt_file)
+        output, how_long = self.judge.run()
+        self.assertEqual(output, "hello joe!")
+        judge.Toolkit.delete(script_file)
+        judge.Toolkit.delete(txt_file)
+
+    def test_run_a_lua_script(self):
+        script = """
+line = io.read("*line")
+io.write(line, "\\n")
+"""
+        txt = "hello joe\n"
+        script_file = "test.lua"
+        txt_file = "test.txt"
+        judge.Toolkit.save(script_file, script)
+        judge.Toolkit.save(txt_file, txt)
+        self.judge = judge.Judge(script_file, txt_file)
+        output, how_long = self.judge.run()
+        self.assertEqual(output, "hello joe")
+        judge.Toolkit.delete(script_file)
+        judge.Toolkit.delete(txt_file)
 
 class TestApp(unittest.TestCase):
     def setUp(self):

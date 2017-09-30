@@ -22,11 +22,19 @@
             "kind": "interpreted",
             "run": "cat {0}"
         },
+        "go": {
+            "kind": "interpreted",
+            "run": "go run {0}"
+        },
+        "lua": {
+            "kind": "interpreted",
+            "run": "lua {0}"
+        },
         "c": {
             "kind": "compiled",
             "build": "gcc {0} -o {0}.out",
             "run": "./{0}.out",
-            "clean": "rm %s.out"
+            "clean": "rm {0}.out"
         }
     }
 }
