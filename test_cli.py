@@ -13,16 +13,27 @@ class TestJudge(unittest.TestCase):
         pass
 
     def test_cli_can_give_you_help(self):
-        output = subprocess.check_output(['python', 'cli.py'], stderr=subprocess.STDOUT)
+        output = subprocess.check_output(['python', 'cli.py'], stderr=subprocess.STDOUT).decode('utf-8').strip()
         self.assertEqual(output, 'Arguments missing!')
 
     def test_cli_can_run_a_python_program(self):
         judge.Toolkit.save(self.src_script, self.script)
         judge.Toolkit.save(self.src_txt, self.txt)
-        output = subprocess.check_output(['python', 'cli.py', self.src_script, self.src_txt], 
-                                         stderr=subprocess.STDOUT)
+        output = subprocess.check_output(['python', 'cli.py', self.src_script, self.src_txt],
+                                         stderr=subprocess.STDOUT).decode('utf-8').strip()
         self.assertEqual(output, self.txt)
         judge.Toolkit.delete(self.src_script)
+        judge.Toolkit.delete(self.src_txt)
+
+    def test_cli_can_run_a_ruby_program(self):
+        src_script = "puts gets.chomp"
+        script = "hello.rb"
+        judge.Toolkit.save(src_script, script)
+        judge.Toolkit.save(self.src_txt, self.txt)
+        output = subprocess.check_output(['python', 'cli.py', src_script, self.src_txt],
+                                         stderr=subprocess.STDOUT).decode('utf-8').strip()
+        self.assertEqual(output, self.txt)
+        judge.Toolkit.delete(src_script)
         judge.Toolkit.delete(self.src_txt)
 
 if __name__ == '__main__':
