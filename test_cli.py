@@ -26,8 +26,8 @@ class TestJudge(unittest.TestCase):
         judge.Toolkit.delete(self.src_txt)
 
     def test_cli_can_run_a_ruby_program(self):
-        src_script = "puts gets.chomp"
-        script = "hello.rb"
+        src_script = "hello.rb"
+        script = "puts gets.chomp"
         judge.Toolkit.save(src_script, script)
         judge.Toolkit.save(self.src_txt, self.txt)
         output = subprocess.check_output(['python', 'cli.py', src_script, self.src_txt],
