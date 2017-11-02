@@ -1,10 +1,10 @@
 import os
-import json
+import yaml
 
 def load_config(configfile):
     outlet = { }
     with open(configfile, 'r') as fp:
-        outlet = json.loads(fp.read())
+        outlet = yaml.load(fp.read())
     return outlet
 
 def save(where, what):
@@ -22,7 +22,7 @@ def delete(what):
 def identify(filename):
     """Identifies which language the script was written on."""
     extension = filename.split('.')[-1]
-    raw_config = load_config('config.json')
+    raw_config = load_config('config.yml')
     if extension in raw_config['available']:
         return raw_config['available'][extension]
     else:
@@ -37,8 +37,7 @@ def get_bang(script):
 
 def extend(language):
     outlet = None
-    with open('config.json', 'r') as fp:
-        extensions = json.loads(fp.read())['available']
+    extensions = load_config('config.yml')['available']
     for extension in extensions:
         current = extensions[extension]
         if current == language:

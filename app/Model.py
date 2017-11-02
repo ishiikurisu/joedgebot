@@ -28,7 +28,7 @@ class Model:
             raise RuntimeError()
 
     def is_valid(language):
-        config = judge.Toolkit.load_config('config.json')
+        config = judge.Toolkit.load_config('config.yml')
         if language in config['about']:
             return True
         else:

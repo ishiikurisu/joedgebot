@@ -6,7 +6,7 @@ class Judge:
 
     def __init__(self, src_script, src_txt):
         """Creates a new judge that is able to run"""
-        self.raw_config = load_config('config.json')
+        self.raw_config = load_config('config.yml')
         self.src_script = src_script
         self.src_txt = src_txt
         with open(src_script, 'r') as fp:
