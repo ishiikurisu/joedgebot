@@ -1,5 +1,6 @@
 import judge
 import sys
+import os
 
 def parse_args(args):
     args = sys.argv[1:]
@@ -14,6 +15,10 @@ def run(params):
     pipe = params['src']
     inlet = params['txt']
     bot = judge.Judge(pipe, inlet)
+
+    if (bot.raw_config is None) and ('JOEDGEBOT_HOME' in os.environ):
+        bot.set_config(os.environ['JOEDGEBOT_HOME'])
+
     outlet, elapsed = bot.run()
     return outlet
 
