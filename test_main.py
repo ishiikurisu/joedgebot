@@ -9,6 +9,17 @@ class TestJudge(unittest.TestCase):
         self.src_script = 'hello.py'
         self.src_txt = 'hello.txt'
 
+    def test_try_to_use_an_inexistent_config_file(self):
+        self.assertIsNone(judge.Toolkit.load_config('randomconfig'))
+        judge.Toolkit.save(self.src_script, self.script)
+        judge.Toolkit.save(self.src_txt, self.txt)
+        self.judge = judge.Judge(self.src_script, self.src_txt)
+        self.judge.set_config('randomconfig')
+        with self.assertRaises(RuntimeError):
+            self.judge.run()
+        judge.Toolkit.delete(self.src_script)
+        judge.Toolkit.delete(self.src_txt)
+
     def test_try_to_open_inexistent_file(self):
         judge.Toolkit.delete('randomfile')
         with self.assertRaises(FileNotFoundError):

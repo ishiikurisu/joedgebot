@@ -2,9 +2,12 @@ import os
 import yaml
 
 def load_config(configfile):
-    outlet = { }
-    with open(configfile, 'r') as fp:
-        outlet = yaml.load(fp.read())
+    outlet = None
+    try:
+        with open(configfile, 'r') as fp:
+            outlet = yaml.load(fp.read())
+    except FileNotFoundError as e:
+        pass
     return outlet
 
 def save(where, what):

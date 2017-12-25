@@ -12,10 +12,17 @@ class Judge:
         with open(src_script, 'r') as fp:
             self.script = fp.read()
 
+    def set_config(self, configpath):
+        self.raw_config = load_config(configpath)
+
     def run(self):
         """Builds and runs the provided scripts"""
         output = None
         elapsed = -1
+
+        # Error handling
+        if self.raw_config is None:
+            raise RuntimeError('No configuration file!')
 
         # Cleaning source code
         if self.script.split('\n')[0][0:2] == '#!':
