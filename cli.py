@@ -20,6 +20,8 @@ def run(params):
         bot.set_config(os.environ['JOEDGEBOT_HOME'])
 
     outlet, elapsed = bot.run()
+    if type(outlet) is type(b''):
+        outlet = outlet.decode('utf-8')
     return outlet
 
 if __name__ == '__main__':
