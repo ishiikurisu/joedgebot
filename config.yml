@@ -29,3 +29,9 @@ about:
     build: gcc {0} -o {0}.out
     run: "./{0}.out"
     clean: rm {0}.out
+  java:
+    kind: bytecode
+    build: javac {0}
+    run: java {0}
+    clean: rm *.class   
+...

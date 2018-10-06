@@ -1,4 +1,4 @@
-make: test
+make: cli
 
 bot:
 	python bot.py $(API)
@@ -15,3 +15,4 @@ test_main:
 test_cli: cli
 	python test_cli.py
 	rm cli.exe
+	rm *.class

@@ -36,5 +36,24 @@ class TestJudge(unittest.TestCase):
         judge.Toolkit.delete(src_script)
         judge.Toolkit.delete(self.src_txt)
 
+    def test_cli_can_run_a_java_program(self):
+        src_script = "Hello.java"
+        script = """import java.io.*;
+public class Hello {
+    public static void main(String[] args) throws IOException {
+        InputStreamReader ir = new InputStreamReader(System.in);
+        BufferedReader in = new BufferedReader(ir);
+        System.out.println(in.readLine());
+    }
+}
+"""
+        judge.Toolkit.save(src_script, script)
+        judge.Toolkit.save(self.src_txt, self.txt)
+        output = subprocess.check_output(['./cli.exe', src_script, self.src_txt],
+                                         stderr=subprocess.STDOUT).decode('utf-8').strip()
+        self.assertEqual(output, self.txt)
+        judge.Toolkit.delete(src_script)
+        judge.Toolkit.delete(self.src_txt)
+
 if __name__ == '__main__':
     unittest.main()

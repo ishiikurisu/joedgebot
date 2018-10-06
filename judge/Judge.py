@@ -44,6 +44,16 @@ class Judge:
                 return e.output, elapsed
             raw_command = self.raw_config['about'][lang]['run']
             command = (raw_command.format(self.src_script)).split(' ')
+        elif kind == 'bytecode':
+            raw_build = self.raw_config['about'][lang]['build']
+            build = (raw_build.format(self.src_script)).split(' ')
+            try:
+                subprocess.check_output(build, stderr=subprocess.STDOUT)
+            except subprocess.CalledProcessError as e:
+                return e.output, elapsed
+            raw_command = self.raw_config['about'][lang]['run']
+            bytecode = '.'.join(self.src_script.split('.')[:-1])
+            command = raw_command.format(bytecode).split(' ')
         else:
             raise AttributeError()
 
